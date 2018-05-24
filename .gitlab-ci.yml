@@ -20,6 +20,7 @@ before_script:
 
 stages:
     - test
+    - compile
     - build
 
 format:
@@ -30,7 +31,7 @@ format:
       - go test -race $(go list ./... | grep -v /vendor/)
 
 compile:
-    stage: build
+    stage: compile
     script:
       - make build
     artifacts:
