@@ -5,6 +5,7 @@ variables:
   # Please edit to your GitLab project
   REGISTRY_NAME: registry.gitlab.com
   REPO_NAME: flf2ko/goserver
+  IMAGE_NAME: $REGISTRY_NAME/$REPO_NAME
 
 # The problem is that to be able to use go get, one needs to put
 # the repository in the $GOPATH. So for example if your gitlab domain
@@ -37,9 +38,13 @@ compile:
         - bin/server
 
 build image:
+     image: docker:stable
+     services:
+       - docker:dind
      only: 
        - master
      stage: build
      script: 
+       - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $REGISTRY_NAME/$REPO_NAME
        - docker build -t $REGISTRY_NAME/$REPO_NAME:$CI_COMMIT_REF_NAME .
        - docker push $REGISTRY_NAME/$REPO_NAME:$CI_COMMIT_REF_NAME
