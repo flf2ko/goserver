@@ -44,7 +44,7 @@ build image:
      only: 
        - master
      stage: build
-     dependency:
+     dependencies:
        - compile
      script: 
        - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $REGISTRY_NAME/$REPO_NAME
