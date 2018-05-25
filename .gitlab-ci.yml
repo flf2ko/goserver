@@ -20,7 +20,6 @@ before_script:
 
 stages:
     - test
-    - compile
     - build
 
 format:
@@ -30,24 +29,23 @@ format:
       - go vet $(go list ./... | grep -v /vendor/)
       - go test -race $(go list ./... | grep -v /vendor/)
 
-compile:
-    stage: compile
+make cross compile:
+    stage: build
     script:
-      - make build
+      - make cross-compile
     artifacts:
       paths:
         - bin/
 
-build image:
+
+build image in image:
      image: docker:stable
      services:
        - docker:dind
-     only: 
+     only:
        - master
      stage: build
-     dependencies:
-       - compile
      script: 
-       - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $REGISTRY_NAME/$REPO_NAME
-       - docker build -t $REGISTRY_NAME/$REPO_NAME:$CI_COMMIT_REF_NAME .
-       - docker push $REGISTRY_NAME/$REPO_NAME:$CI_COMMIT_REF_NAME
+       - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $IMAGE_NAME
+       - docker build -t $IMAGE_NAME .
+       - docker push $IMAGE_NAME
