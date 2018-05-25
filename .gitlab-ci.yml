@@ -29,10 +29,10 @@ format:
       - go vet $(go list ./... | grep -v /vendor/)
       - go test -race $(go list ./... | grep -v /vendor/)
 
-make cross compile:
+build binary:
     stage: build
     script:
-      - make cross-compile
+      - make build
     artifacts:
       paths:
         - bin/
@@ -45,6 +45,8 @@ build image in image:
      only:
        - master
      stage: build
+     dependencies:
+       - build binary
      script: 
        - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $IMAGE_NAME
        - docker build -t $IMAGE_NAME .
