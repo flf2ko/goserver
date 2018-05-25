@@ -21,6 +21,7 @@ before_script:
 stages:
     - test
     - build
+    - dockerize
 
 format:
     stage: test
@@ -44,7 +45,7 @@ build image in image:
        - docker:dind
      only:
        - master
-     stage: build
+     stage: dockerize
      dependencies:
        - build binary
      script: 
