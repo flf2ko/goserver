@@ -49,6 +49,6 @@ build image in image:
      dependencies:
        - build binary
      script: 
-       - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $IMAGE_NAME
+       - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $REGISTRY_NAME
        - docker build -t $IMAGE_NAME .
        - docker push $IMAGE_NAME
