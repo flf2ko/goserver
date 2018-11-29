@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goserver
+spec:
+  replicas: 1
+  template:
+    spec:
+      securityContext:
+        runAsUser: 1000
+      containers:
+        - name: goserver
+          image: artifactory.devops.maaii.com/cicd-docker-local/goserver:latest
+          imagePullPolicy: Always
+          env:
+            - name: PHASE
+              value: test
+          ports:
+            - name: api-port
+              containerPort: 8081
+              protocol: TCP
+          livenessProbe:
+            tcpSocket:
+              port: 8081
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 8081

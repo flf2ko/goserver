@@ -1,0 +1,5 @@
+commonLabels:
+  app: goserver
+resources:
+- deployment.yaml
+- service.yaml
