@@ -10,7 +10,7 @@ spec:
         runAsUser: 1000
       containers:
         - name: goserver
-          image: artifactory.devops.maaii.com/cicd-docker-local/goserver:latest
+          image: flf2ko/goserver:v1.0.1
           imagePullPolicy: Always
           env:
             - name: PHASE
