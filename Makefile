@@ -12,4 +12,4 @@ modvendor:
 	GO111MODULE=on go mod vendor
 
 docker:
-	docker build -t $(DOCKERTAG):$(TAG) -f devops/Dockerfile .
+	docker build --build-arg VERSION=$(TAG) -t $(DOCKERTAG):$(TAG) -f devops/Dockerfile .

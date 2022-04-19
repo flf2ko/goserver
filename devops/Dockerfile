@@ -1,8 +1,10 @@
 FROM golang:1.18-alpine3.15 as builder
 WORKDIR /go/src/
-ENV GO111MODULE=on
+
+ARG VERSION
+
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go install -mod=vendor -ldflags="-w -s" -v ./...
+RUN CGO_ENABLED=0 GOOS=linux go install -mod=vendor -ldflags="-w -s -X main.ver=$VERSION" -v ./...
 
 FROM alpine:3.15
 RUN apk --no-cache add ca-certificates
