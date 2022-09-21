@@ -13,3 +13,9 @@ modvendor:
 
 docker:
 	docker build --build-arg VERSION=$(TAG) -t $(DOCKERTAG):$(TAG) -f devops/Dockerfile .
+
+dockerpush: docker
+	docker push $(DOCKERTAG):$(TAG)
+
+deploy:
+	kustomize build devops/base | kubectl apply -f -

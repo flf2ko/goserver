@@ -26,12 +26,12 @@ func main() {
 	}
 
 	s := &http.Server{
-		Addr:         ":8081",
+		Addr:         ":80",
 		Handler:      router,
 		ReadTimeout:  time.Duration(30) * time.Second,
 		WriteTimeout: time.Duration(30) * time.Second,
 	}
-	fmt.Println("API listens on port 8081")
+	fmt.Println("API listens on port 80")
 	s.ListenAndServe()
 }
 
